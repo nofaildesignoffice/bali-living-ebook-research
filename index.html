@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>발리 살이 전자책 시장조사 리포트 | NoFail Design</title>
+<meta name="description" content="발리 장기거주 전자책(한국어·영어) 시장규모, 타겟, 가격, 목차 설계. BPS·발리 관광청·인도네시아 이민국·BKPM 등 1차 공식 소스 교차검증(codex+Claude).">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --ink:#111827; --body:#374151; --muted:#6b7280; --faint:#9ca3af;
+    --line:#e5e7eb; --line-soft:#f1f3f5; --fill:#f8fafc; --fill-2:#f3f4f6;
+    --accent:#0d9488; --accent-deep:#0f5e58; --accent-soft:#e6f4f2;
+    --ok:#15803d; --ok-bg:#eafaf0; --warn:#b45309; --warn-bg:#fdf3e6; --low:#6b7280; --low-bg:#f1f3f5;
+    --radius:16px; --radius-sm:10px; --maxw:920px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+    color:var(--body); background:#fff; line-height:1.75; letter-spacing:-.01em;
+    word-break:keep-all; -webkit-font-smoothing:antialiased;
+  }
+  section{background:#fff; padding:64px 24px; border-bottom:1px solid var(--line-soft)}
+  .wrap{max-width:var(--maxw); margin:0 auto}
+  h1,h2,h3,h4{color:var(--ink); line-height:1.3; letter-spacing:-.02em; font-weight:800}
+  p{margin:0 0 14px}
+  a{color:var(--accent-deep); text-decoration:none; border-bottom:1px solid rgba(13,148,136,.3)}
+  a:hover{border-bottom-color:var(--accent)}
+  strong{font-weight:700; color:var(--ink)}
+  sup{font-size:.68em; color:var(--accent-deep); font-weight:700; margin-left:1px}
+
+  /* HERO */
+  .hero{background:#fff; padding:72px 24px 56px; border-bottom:1px solid var(--line)}
+  .hero .kicker{display:inline-block; font-size:13px; font-weight:700; letter-spacing:.04em;
+    color:var(--accent-deep); background:var(--accent-soft); padding:6px 14px; border-radius:999px; margin-bottom:22px}
+  .hero h1{font-size:clamp(28px,5vw,44px); font-weight:800; margin-bottom:18px}
+  .hero .lead{font-size:clamp(16px,2.2vw,19px); color:var(--body); max-width:720px; margin-bottom:26px}
+  .meta-row{display:flex; flex-wrap:wrap; gap:10px; font-size:13px}
+  .meta-row span{border:1px solid var(--line); border-radius:999px; padding:6px 14px; color:var(--muted); background:#fff}
+
+  /* TOC nav */
+  .toc{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin-top:34px}
+  .toc a{display:block; border:1px solid var(--line); border-radius:var(--radius-sm); padding:16px 18px; color:var(--ink);
+    font-weight:600; font-size:15px; background:#fff; transition:.15s}
+  .toc a:hover{border-color:var(--accent); background:var(--accent-soft)}
+  .toc a span{display:block; font-size:12px; color:var(--muted); font-weight:500; margin-top:3px}
+
+  .eyebrow{font-size:13px; font-weight:700; letter-spacing:.06em; color:var(--accent); margin-bottom:10px; text-transform:uppercase}
+  h2.sect{font-size:clamp(24px,3.4vw,32px); margin-bottom:10px}
+  .sect-sub{font-size:16px; color:var(--muted); margin-bottom:34px; max-width:760px}
+  h3.block{font-size:20px; margin:40px 0 14px; padding-top:4px}
+  h4{font-size:16px; margin:24px 0 10px; font-weight:700}
+
+  /* stat cards */
+  .stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:14px; margin:26px 0}
+  .stat{border:1px solid var(--line); border-radius:var(--radius); padding:22px 20px; background:#fff}
+  .stat .n{font-size:30px; font-weight:800; color:var(--ink); line-height:1.1}
+  .stat .n small{font-size:15px; font-weight:700; color:var(--accent-deep)}
+  .stat .l{font-size:13px; color:var(--muted); margin-top:8px; line-height:1.5}
+
+  /* generic card / callout (full border, NO left bar) */
+  .card{border:1px solid var(--line); border-radius:var(--radius); padding:24px; background:#fff; margin:18px 0}
+  .card.fill{background:var(--fill)}
+  .note{border:1px solid var(--line); border-radius:var(--radius-sm); padding:16px 18px; background:var(--fill); font-size:14px; color:var(--body); margin:16px 0}
+  .note b{color:var(--ink)}
+  .warnbox{border:1px solid #f0d9b5; border-radius:var(--radius-sm); padding:16px 18px; background:var(--warn-bg); font-size:14px; margin:16px 0}
+  .warnbox b{color:var(--warn)}
+
+  ul.clean{list-style:none; margin:12px 0}
+  ul.clean li{position:relative; padding-left:20px; margin-bottom:9px; font-size:15px}
+  ul.clean li::before{content:"·"; position:absolute; left:4px; top:-1px; color:var(--accent); font-weight:800; font-size:18px}
+  ol.steps{counter-reset:s; list-style:none; margin:14px 0}
+  ol.steps li{position:relative; padding-left:38px; margin-bottom:12px; font-size:15px}
+  ol.steps li::before{counter-increment:s; content:counter(s); position:absolute; left:0; top:1px;
+    width:24px; height:24px; border-radius:50%; background:var(--accent-soft); color:var(--accent-deep);
+    font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center}
+
+  /* tables */
+  .tw{overflow-x:auto; margin:18px 0; border:1px solid var(--line); border-radius:var(--radius)}
+  table{border-collapse:collapse; width:100%; font-size:14px; min-width:520px}
+  th,td{padding:12px 14px; text-align:left; border-bottom:1px solid var(--line-soft)}
+  thead th{background:var(--fill-2); color:var(--ink); font-weight:700; font-size:13px; white-space:nowrap}
+  tbody tr:last-child td{border-bottom:none}
+  td.num,th.num{text-align:right; white-space:nowrap; font-variant-numeric:tabular-nums}
+  tbody tr:hover{background:var(--fill)}
+  caption{caption-side:bottom; font-size:12px; color:var(--faint); padding:10px 14px; text-align:left}
+
+  /* confidence badges */
+  .badge{display:inline-block; font-size:12px; font-weight:700; padding:3px 10px; border-radius:999px; vertical-align:middle}
+  .b-ok{background:var(--ok-bg); color:var(--ok)}
+  .b-warn{background:var(--warn-bg); color:var(--warn)}
+  .b-low{background:var(--low-bg); color:var(--low)}
+
+  /* ebook TOC chapters */
+  .chapters{display:grid; gap:14px; margin-top:24px}
+  .chapter{border:1px solid var(--line); border-radius:var(--radius); padding:22px 24px; background:#fff}
+  .chapter .ch-h{display:flex; align-items:baseline; gap:12px; margin-bottom:6px}
+  .chapter .ch-n{font-size:13px; font-weight:800; color:var(--accent); letter-spacing:.03em; white-space:nowrap}
+  .chapter .ch-t{font-size:18px; font-weight:800; color:var(--ink)}
+  .chapter .ch-d{font-size:14px; color:var(--muted); margin-bottom:12px}
+  .chapter ul{list-style:none; display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:4px 20px}
+  .chapter ul li{font-size:14px; color:var(--body); padding:4px 0 4px 16px; position:relative}
+  .chapter ul li::before{content:"–"; position:absolute; left:0; color:var(--faint)}
+
+  /* persona / target */
+  .cols2{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+  @media(max-width:680px){.cols2{grid-template-columns:1fr}}
+
+  .scn{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:18px 0}
+  .scn .c{border:1px solid var(--line); border-radius:var(--radius); padding:18px; text-align:center; background:#fff}
+  .scn .c .p{font-size:13px; color:var(--muted)}
+  .scn .c .v{font-size:24px; font-weight:800; color:var(--ink); margin:6px 0}
+  .scn .c .s{font-size:12px; color:var(--faint)}
+
+  footer{background:#fff; padding:56px 24px; border-top:1px solid var(--line)}
+  footer .wrap{color:var(--muted); font-size:13px}
+  footer h3{font-size:16px; margin-bottom:14px}
+  footer ul{list-style:none}
+  footer li{margin-bottom:7px; font-size:13px; word-break:break-all}
+  .disclaimer{border:1px solid var(--line); border-radius:var(--radius-sm); padding:18px 20px; background:var(--fill); font-size:13px; color:var(--muted); margin-top:26px}
+
+  .srclist{font-size:12.5px; color:var(--faint); margin-top:14px; line-height:1.7}
+  .srclist a{color:var(--muted); border:none; text-decoration:underline; text-decoration-color:var(--line)}
+  .anchor{display:block; position:relative; top:-20px; visibility:hidden}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <span class="kicker">시장조사 리포트 · 조사기준일 2026.10.03</span>
+    <h1>발리 살이 전자책<br>시장조사 &amp; 콘텐츠 설계 리포트</h1>
+    <p class="lead">
+      짱구(Canggu) 거주, 두 아이 국제학교, 반려동물 동반, 가정부 고용, 인스타 5.9만 팔로워 크리에이터인 저자가
+      <strong>발리 장기거주 가이드 전자책(한국어·영어)</strong>을 만들어 판다는 전제 아래,
+      시장규모·타겟·가격·목차를 1차 공식 소스로 검증해 정리했습니다.
+    </p>
+    <div class="meta-row">
+      <span>리서치 2레인 교차검증 (codex × Claude)</span>
+      <span>1차 소스: BPS · 발리 관광청 · 이민국 · BKPM · PP 18/2021</span>
+      <span>할루시네이션 가드: 미검증 수치는 "확인불가" 명시</span>
+    </div>
+
+    <nav class="toc">
+      <a href="#summary">요약 결론<span>한눈에 보는 핵심</span></a>
+      <a href="#market">A. 시장규모<span>TAM · 타겟국가 · 수요신호</span></a>
+      <a href="#pricing">가격 · 판매 시나리오<span>경쟁가 · 전환율 민감도</span></a>
+      <a href="#content">B. 전자책 콘텐츠<span>실거주 지식 6영역</span></a>
+      <a href="#toc">전자책 목차(안)<span>10파트 챕터 설계</span></a>
+      <a href="#caveats">주의 · 확인불가 · 출처<span>검증 규율</span></a>
+    </nav>
+  </div>
+</header>
+
+<!-- SUMMARY -->
+<section id="summary"><div class="wrap">
+  <div class="eyebrow">Executive Summary</div>
+  <h2 class="sect">한눈에 보는 결론</h2>
+  <p class="sect-sub">시장의 상단(관심 모수)은 충분히 크고, 저자의 실제 경험은 "여행 가이드"가 아니라 "가족 이주 실행서"로 좁힐 때 희소성이 생깁니다. 다만 팔로워 수를 그대로 매출로 환산하면 안 됩니다.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="n">694.9<small>만 회</small></div><div class="l">2025년 발리 외국인 직접입국 (+9.72% YoY)</div></div>
+    <div class="stat"><div class="n">34.7<small>만 회</small></div><div class="l">2025년 한국인 발리 방문, 전체 4위 시장(4.99%)</div></div>
+    <div class="stat"><div class="n">5.5<small>배</small></div><div class="l">한국인 발리 방문 증가 (2022년 6.3만 → 2025년 34.7만)</div></div>
+    <div class="stat"><div class="n">US$3~35</div><div class="l">경쟁 이주·발리 전자책 관찰 가격대 (표본 소수)</div></div>
+  </div>
+
+  <div class="card fill">
+    <h4 style="margin-top:0">핵심 메시지 5가지</h4>
+    <ul class="clean">
+      <li><strong>시장 상단은 크다.</strong> 2025년 발리 외국인 입국 694.9만 회, 인도네시아 전체 1,538.7만 회. 단, 방문객 전부가 "장기거주 관심층"은 아니므로 그대로 수요로 간주하면 안 됩니다.</li>
+      <li><strong>한국어판 수요 신호가 가장 강하다.</strong> 한국인 발리 방문이 3년 만에 5.5배로 늘어 4위 시장이 됐습니다. 30~40대 유자녀 가구의 "한달살기 → 이주 검토" 흐름이 핵심.</li>
+      <li><strong>영어판은 가족 이주로 좁혀라.</strong> 노마드 일반이 아니라 <em>family relocation to Canggu with kids + pets + staff</em>. 저자의 실제 경험과 차별점이 정확히 겹칩니다.</li>
+      <li><strong>차별 자산 = 고관여 실무.</strong> 국제학교·반려동물 반입·직원 고용은 일반 여행서가 얕게 다루는 영역이고, 저자가 직접 통과한 문제입니다.</li>
+      <li><strong>팔로워 ≠ 구매자.</strong> 5.9만을 곧바로 매출로 보지 말고, 사전예약·대기명단으로 실수요를 먼저 검증하는 게 안전합니다.</li>
+    </ul>
+  </div>
+</div></section>
+
+<!-- A. MARKET -->
+<section id="market"><div class="wrap">
+  <div class="eyebrow">Part A</div>
+  <h2 class="sect">시장규모</h2>
+  <p class="sect-sub">"얼마나 많은 사람에게 팔 수 있나"를 관광 모수 → 관심 모수 → 실수요 순서로 좁혀 봅니다. 모든 수치는 발표·확정연도와 출처를 병기했습니다.</p>
+
+  <h3 class="block">A1. 발리 · 인도네시아 외국인 관광객 <span class="badge b-ok">신뢰도 높음</span></h3>
+  <div class="tw"><table>
+    <thead><tr><th>집계</th><th class="num">2024</th><th class="num">2025</th><th class="num">증감</th></tr></thead>
+    <tbody>
+      <tr><td>인도네시아 전체</td><td class="num">13,902,420</td><td class="num">15,386,646</td><td class="num">약 +10.7%</td></tr>
+      <tr><td>발리 직접입국</td><td class="num">6,333,360</td><td class="num">6,948,754</td><td class="num">+9.72%</td></tr>
+    </tbody>
+    <caption>단위: 입국/방문 횟수(고유인원 아님). 발리 수치는 "발리로 직접 들어온 외국인 방문"이며 인니 전체와 단순 합산 불가. 출처: BPS, BPS Bali(2025 발표·2026 확정).</caption>
+  </table></div>
+  <div class="note"><b>월간 피크·저점(2025):</b> 7월 697,107회가 최고, 2월 450,697회가 최저. 건기(6~9월)에 고점, 11월 하락 후 12월 반등. <b>전자책·광고 집행의 성수기 리듬</b>으로 활용 가능합니다.</div>
+
+  <h3 class="block">A2. 발리 방문 상위 국가 Top 10 (2025) <span class="badge b-ok">신뢰도 높음</span></h3>
+  <p>퍼포먼스 마케팅의 <strong>타겟 국가 우선순위</strong>이자 영어판의 주소가능 시장입니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>순위</th><th>국가</th><th class="num">2025 방문(회)</th><th class="num">비중</th><th class="num">YoY</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>🇦🇺 호주</td><td class="num">1,628,459</td><td class="num">23.44%</td><td class="num">+5.5%</td></tr>
+      <tr><td>2</td><td>🇮🇳 인도</td><td class="num">569,261</td><td class="num">8.19%</td><td class="num">+3.4%</td></tr>
+      <tr><td>3</td><td>🇨🇳 중국</td><td class="num">537,375</td><td class="num">7.73%</td><td class="num">+19.8%</td></tr>
+      <tr><td>4</td><td>🇰🇷 한국</td><td class="num">346,679</td><td class="num">4.99%</td><td class="num">+17.9%</td></tr>
+      <tr><td>5</td><td>🇬🇧 영국</td><td class="num">317,523</td><td class="num">4.57%</td><td class="num">+7.5%</td></tr>
+      <tr><td>6</td><td>🇫🇷 프랑스</td><td class="num">279,117</td><td class="num">4.02%</td><td class="num">+8.4%</td></tr>
+      <tr><td>7</td><td>🇺🇸 미국</td><td class="num">274,611</td><td class="num">3.95%</td><td class="num">+4.9%</td></tr>
+      <tr><td>8</td><td>🇲🇾 말레이시아</td><td class="num">251,156</td><td class="num">3.61%</td><td class="num">+2.0%</td></tr>
+      <tr><td>9</td><td>🇸🇬 싱가포르</td><td class="num">211,331</td><td class="num">3.04%</td><td class="num">-3.5%</td></tr>
+      <tr><td>10</td><td>🇯🇵 일본</td><td class="num">208,615</td><td class="num">3.00%</td><td class="num">+18.0%</td></tr>
+    </tbody>
+    <caption>Top 10 합계는 전체의 66.55%. 출처: 발리 관광청 2025 통계연감(Table 9).</caption>
+  </table></div>
+  <div class="note">
+    <b>영어판 1차 타겟(영어권):</b> 호주 + 영국 + 미국만 합쳐도 2,220,593회(31.96%). 여기에 가족 이주 비율만 추려도 유의미한 규모입니다.
+    <b>마케팅 함의:</b> 영어판은 호주를 최우선(압도적 1위), 한국어판은 별도 캠페인으로 운영.
+  </div>
+
+  <h3 class="block">A3. 한국 시장: 방문 추이와 관심도 <span class="badge b-ok">방문 높음</span> <span class="badge b-low">검색·커뮤니티 낮음</span></h3>
+  <div class="cols2">
+    <div class="card">
+      <h4 style="margin-top:0">한국인 발리 직접 방문</h4>
+      <div class="tw"><table style="min-width:unset">
+        <thead><tr><th>연도</th><th class="num">방문(회)</th><th class="num">전년比</th></tr></thead>
+        <tbody>
+          <tr><td>2022</td><td class="num">63,353</td><td class="num">재개 초기</td></tr>
+          <tr><td>2023</td><td class="num">226,789</td><td class="num">+258%</td></tr>
+          <tr><td>2024</td><td class="num">294,024</td><td class="num">+29.6%</td></tr>
+          <tr><td>2025</td><td class="num">346,679</td><td class="num">+17.9%</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:0">7월(38,275회)이 연중 최고. 가장 강한 수요 신호입니다.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">관심도 · 커뮤니티 (보조지표)</h4>
+      <ul class="clean">
+        <li>네이버 데이터랩은 상대지수(0~100)만 제공, 절대 검색량 없음 → 추세 수치 <strong>확인불가</strong>.</li>
+        <li>네이버 카페 회원수는 robots 제한으로 검증 불가 <strong>확인불가</strong>.</li>
+        <li>카테고리 존재 증거: 한국어 발리 한달살기 POD 도서 정가 16,800원대 유통 중(판매량 증거는 아님).</li>
+      </ul>
+      <div class="warnbox" style="margin-bottom:0"><b>그래서:</b> 한국 수요의 "크기"는 검색량이 아니라 <b>사전예약·대기명단 테스트</b>로 직접 측정하는 걸 권장합니다.</div>
+    </div>
+  </div>
+
+  <h3 class="block">A4. 디지털노마드 · 장기체류 외국인과 짱구 <span class="badge b-warn">신뢰도 중간</span></h3>
+  <ul class="clean">
+    <li><strong>공식 상시 인구 통계는 없다.</strong> 비자유형·체류기간을 통합한 "발리 거주 외국인 수"의 정부 공식치는 <strong>확인불가</strong>(어느 정부도 깨끗한 노마드 카운트를 발표하지 않음).</li>
+    <li><strong>대체지표:</strong> 2025-03-24 외국인 숙박 신고(APOA) 스냅샷에서 전국 78,077명 중 발리가 47,772명(61.2%)으로 최대. 특정일 스냅샷이며 장기체류자 수는 아닙니다.</li>
+    <li><strong>짱구 = 허브:</strong> 2024년 동료심사 연구들이 짱구를 세계 유수의 "디지털노마드 빌리지"로 기술. 코워킹·카페·비치클럽 밀집.</li>
+    <li><strong>E33G 원격근무비자 발급 건수:</strong> 2024-04-01 시행은 확인되나 발급 건수 공식 공개자료 <strong>확인불가</strong>.</li>
+  </ul>
+  <div class="note">언론·상업 추정치(짱구 노마드 1.5만~2만 명, 발리 노마드 2.6만~3.5만 명 등)는 출처마다 크게 갈리고 방법론이 불투명합니다. 리포트에서는 <b>방향성 참고용</b>으로만 다루고 확정수치로 쓰지 않습니다.</div>
+</div></section>
+
+<!-- PRICING -->
+<section id="pricing"><div class="wrap">
+  <div class="eyebrow">Part A · 수익화</div>
+  <h2 class="sect">가격대와 판매 시나리오</h2>
+  <p class="sect-sub">"이 지식을 얼마에, 몇 권 팔 수 있나"를 경쟁 관찰가와 전환율 민감도로 추정합니다. 예측값이 아니라 범위 시나리오입니다.</p>
+
+  <h3 class="block">A5. 경쟁 전자책 관찰 가격 (2026.10) <span class="badge b-warn">가격 중간</span> <span class="badge b-low">매출 낮음</span></h3>
+  <div class="tw"><table>
+    <thead><tr><th>상품</th><th>형태</th><th class="num">가격</th></tr></thead>
+    <tbody>
+      <tr><td>Relocating to Indonesia (305p)</td><td>영어 eBook</td><td class="num">US$3.00</td></tr>
+      <tr><td>Bali Expat Starter Guide 2026</td><td>영어 PDF</td><td class="num">US$9.99</td></tr>
+      <tr><td>Balinese Beginnings</td><td>영어 eBook</td><td class="num">£7.99 (정가 £17.99)</td></tr>
+      <tr><td>Bali Bound (84p)</td><td>영어 PDF</td><td class="num">AUD 19.95</td></tr>
+      <tr><td>Bali Travel Guide (103p)</td><td>영어 PDF</td><td class="num">US$19.90</td></tr>
+      <tr><td>UnlockBali (155p)</td><td>영어/루마니아어 PDF</td><td class="num">€19.99</td></tr>
+      <tr><td>아이와 함께 발리 두 달 살기 (246p)</td><td>한국어 POD</td><td class="num">16,800원</td></tr>
+    </tbody>
+    <caption>표본 7개(시장평균 아님). 관찰범위 대략 US$3~20 상당 / 16,800원. 출처: Google Play·Payhip·Gumroad·교보 등 판매페이지 실측.</caption>
+  </table></div>
+  <div class="warnbox"><b>매출 사례는 "확인불가".</b> 발리/이주 전자책 중 판매량·순매출을 제3자가 감사·검증한 공개 사례는 찾지 못했습니다. 인접 니치(건축 전문 전자책: 누적 10,827권·추정 US$35만, 팔로워 37.1만) 같은 자기보고·추정치만 존재하며 발리 이주서에 그대로 적용 불가합니다.</div>
+
+  <h3 class="block">A6. 5.9만 팔로워 판매 시나리오 <span class="badge b-low">신뢰도 낮음(민감도 계산)</span></h3>
+  <p>공신력 있는 "팔로워 → 전자책 구매" 표준 전환율은 <strong>확인불가</strong>입니다. 아래는 예측이 아니라, 가격 19,900원 기준 민감도 시뮬레이션(수수료·세금·환불·광고비 차감 전 <em>총매출</em>)입니다.</p>
+  <div class="scn">
+    <div class="c"><div class="p">0.2% 전환</div><div class="v">118권</div><div class="s">약 235만 원</div></div>
+    <div class="c"><div class="p">0.5% 전환</div><div class="v">295권</div><div class="s">약 587만 원</div></div>
+    <div class="c"><div class="p">1.0% 전환</div><div class="v">590권</div><div class="s">약 1,174만 원</div></div>
+    <div class="c"><div class="p">2.0% 전환</div><div class="v">1,180권</div><div class="s">약 2,348만 원</div></div>
+  </div>
+  <div class="note">
+    업계 간접지표상 인스타 전환율은 대체로 1~5% 범위이고 마이크로 인플루언서가 ~1.1% 수준으로 보고되지만, <b>질(참여도)이 양(팔로워)보다 결정적</b>입니다. 발리+다이어트라는 저자의 주제 적합도, 스토리 조회·링크 클릭·DM이 실제 전환을 좌우합니다.
+    <b>권장:</b> 팔로워 기준이 아니라 <code>도달 → 랜딩 방문 → 결제 시작 → 구매</code> 퍼널을 추적하고, 한/영 대기명단을 분리해 100명 단위 사전예약으로 추정치를 교정하세요.
+  </div>
+</div></section>
+
+<!-- B. CONTENT -->
+<section id="content"><div class="wrap">
+  <div class="eyebrow">Part B</div>
+  <h2 class="sect">전자책에 담을 실거주 지식</h2>
+  <p class="sect-sub">거주를 위해 반드시 알아야 하는 6영역을 1차 공식 소스로 검증했습니다. 이 영역들이 그대로 전자책의 핵심 챕터가 됩니다. (아래는 시장조사이지 법률·세무·이민 자문이 아니며, 출간 직전 공식기관 재확인 필요)</p>
+
+  <h3 class="block">B1. 비자 <span class="badge b-ok">신뢰도 높음</span></h3>
+  <div class="note" style="margin-top:0"><b>용어 주의:</b> "B211A"는 과거 명칭입니다. 현행 공식 페이지는 일반 관광 단수비자를 <b>C1</b>으로 표기합니다. 독자에게 구명칭은 검색어로 설명하되, 신청은 최신 코드로 안내해야 합니다.</div>
+  <div class="tw"><table>
+    <thead><tr><th>유형</th><th>핵심 요건 · 허용</th><th>체류</th><th class="num">정부수수료</th></tr></thead>
+    <tbody>
+      <tr><td><strong>관광 C1</strong><br>(구 B211A 계열)</td><td>관광·가족방문·회의. 취업·현지 판매 금지</td><td>최초 60일, 연장해 총 180일</td><td class="num">Rp1,000,000</td></tr>
+      <tr><td><strong>E33G</strong><br>원격근무(노마드)</td><td>해외 법인과 근로계약, 연소득 US$60,000+, 잔고 US$2,000+, 스폰서 불필요. 현지 고용·판매 불가</td><td>1년</td><td class="num">Rp7,000,000</td></tr>
+      <tr><td><strong>E28A</strong><br>투자자 ITAS</td><td>스폰서 회사 주식 Rp10bn+, 법인 설립</td><td>1년 또는 2년</td><td class="num">Rp7,000,000~</td></tr>
+      <tr><td><strong>E33E/E33F</strong><br>고령자(은퇴)</td><td>만 55세+, 월소득/연금 US$3,000+, 은행예치 요구(금액·코드 변동), 스폰서 불필요</td><td>5년(연장 가능)</td><td class="num">Rp13,000,000~</td></tr>
+      <tr><td><strong>Second Home</strong></td><td>대표 안내값: 은행예치 IDR 2bn(약 US$130k) 또는 부동산 IDR 5bn. <em>코드(E33 계열) 혼재</em></td><td>5~10년</td><td class="num">확인불가</td></tr>
+    </tbody>
+    <caption>출처: 인도네시아 이민국 공식 비자 안내(2025 분류·2026 확인), eVisa. 은퇴·Second Home은 코드·금액 기준이 2025~2026 변동 중이라 공식 재확인 필수.</caption>
+  </table></div>
+  <ul class="clean">
+    <li><strong>혼동 금지:</strong> 투자자비자의 "주식 Rp10bn"과 PT PMA 설립의 "총 투자액 / 납입자본"은 서로 다른 규칙입니다.</li>
+    <li><strong>자녀:</strong> 학생 자녀는 학교·체류구조에 따라 E30A 또는 가족동반 자격을 별도 검토해야 합니다.</li>
+  </ul>
+
+  <h3 class="block">B2. 반려동물 반입 <span class="badge b-ok">금지·입국요건 높음</span> <span class="badge b-low">경유관행 낮음</span></h3>
+  <div class="warnbox" style="margin-top:0">
+    <b>가장 중요한 법적 가드레일:</b> 발리는 광견병 <b>비청정지역</b>이고, 발리 주지사 규정 Pergub 88/2008은 개·고양이·원숭이 등의 발리 <b>반입·반출을 폐쇄</b>했습니다.
+    따라서 <b>"발리 국제공항으로 반려동물을 직접 반입할 수 있다"고 안내하면 위험</b>합니다. "자카르타/수라바야 경유 후 육로 반입"을 합법 표준절차로 뒷받침하는 최신 정부 자료는 <b>확인불가</b>이며, 비공식 운송·밀반입은 권하면 안 됩니다. 출발 전 발리 검역당국·농업부 서면 확인이 필수입니다.
+  </div>
+  <h4>인도네시아 입국의 확인 가능한 요건(발리 외 허가 입국항)</h4>
+  <ul class="clean">
+    <li>정부 수의당국 건강증명서, 출국 전 5일 이내 건강검사, 생후 최소 3개월</li>
+    <li>불활화 광견병 백신 + 광견병 항체가(FAVN/RNATT) <strong>≥ 0.5 IU/ml</strong></li>
+    <li>출발국에서 직전 6개월 이상 거주 + 해당 지역 6개월 광견병 미보고</li>
+    <li>사전 수입허가/추천(국가별 승인조건 상이), 도착 시 지정 검역장소 신고·검역 후 방출증명</li>
+    <li>2025-10-01부터 국제 입국자는 통합신고앱 "All Indonesia" 사용(반려동물 허가·검역을 대체하지 않음)</li>
+  </ul>
+
+  <h3 class="block">B3. 부동산 <span class="badge b-ok">법률 높음</span> <span class="badge b-warn">시세 중간</span></h3>
+  <ul class="clean">
+    <li><strong>Hak Milik(완전소유):</strong> 외국인 불가. 인도네시아인 명의 <strong>nominee 구조는 집행·권리 위험</strong>이 커서 책에서 권하면 안 됩니다.</li>
+    <li><strong>Hak Pakai(사용권):</strong> 유효 이민서류 보유 외국인이 PP 18/2021(제69~71조)에 따라 주택 보유 가능. 최대 80년.</li>
+    <li><strong>Hak Sewa(임차/Leasehold):</strong> 토지를 사는 게 아니라 기간 동안 쓸 권리(25~99년). 계약기간·연장·상속·용도지역·건축허가(PBG)·숙박업 허가·세금을 공증인/PPAT가 실사.</li>
+    <li><strong>PT PMA:</strong> 적격 외국투자법인이 HGB/Hak Pakai 취득. 부동산 보유 전용 껍데기 회사는 안 되고 KBLI·사업허가를 맞춰야 함.</li>
+  </ul>
+  <div class="note"><b>짱구 장기임대 공개 호가(2026):</b> 2베드 빌라 연 Rp170m부터, 4~5베드 가족용 연 Rp480m부터. Berawa/Batu Bolong이 높고 Babakan/Tumbak Bayuh가 낮음. 거래가가 아닌 중개 호가이므로 가구·관리비 조건 병기 필요. (PP28/2025는 절차변경이지 소유권 확대가 아님)</div>
+
+  <h3 class="block">B4. 사업자 (PT PMA) <span class="badge b-ok">신뢰도 높음</span></h3>
+  <div class="cols2">
+    <div class="card">
+      <h4 style="margin-top:0">자주 혼동되는 두 수치</h4>
+      <ul class="clean">
+        <li><strong>총 투자액:</strong> KBLI·사업장별 프로젝트당 <strong>Rp10bn 초과</strong>(토지·건물 제외). OSS로 점진 실행·보고.</li>
+        <li><strong>최소 납입자본:</strong> 법인당 <strong>Rp2.5bn</strong>. (2025년 투자부 규정 5/2025에서 기존 Rp10bn 납입에서 인하된 핵심 변경)</li>
+      </ul>
+      <div class="warnbox" style="margin-bottom:0"><b>흔한 오류:</b> 많은 2차 소스가 아직 "납입자본 Rp10bn"으로 적어둡니다. 2025년 기준 <b>납입 Rp2.5bn / 투자계획 Rp10bn</b>으로 구분하세요.</div>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">통상 설립 절차</h4>
+      <ol class="steps">
+        <li>사업 KBLI 확인 + 외국지분 허용 여부</li>
+        <li>최소 2인 주주, 이사·감사 구성, 공증 설립증서</li>
+        <li>법무부 법인승인</li>
+        <li>OSS에서 NIB · 위험기반 사업허가</li>
+        <li>납입자본 · 은행 · 세무등록(NPWP)</li>
+        <li>LKPM 투자활동 보고 + 업종별 추가허가</li>
+      </ol>
+    </div>
+  </div>
+  <div class="note">전자책·콘텐츠업, 부동산 임대·숙박업, 컨설팅은 서로 <b>KBLI·라이선스가 다릅니다.</b> 설립비·공증비·대행료의 공식 단일가격은 없어 <b>확인불가</b>(견적은 로컬 에이전트별).</div>
+
+  <h3 class="block">B5. 아이들 국제학교 (짱구권) <span class="badge b-ok">CCS 높음</span> <span class="badge b-warn">기타 중간</span></h3>
+  <div class="tw"><table>
+    <thead><tr><th>학교</th><th>특징</th><th class="num">연 수업료(범위)</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Canggu Community School</strong><br>(CCS, Tibubeneng)</td><td>EY~Y13, IB</td><td class="num">EY Rp117m → Y12-13 Rp272m</td></tr>
+      <tr><td><strong>ProEd Global School</strong><br>(Umalas)</td><td>Cambridge·학습지원</td><td class="num">약 Rp92m ~ 221m</td></tr>
+      <tr><td><strong>Montessori School Bali</strong><br>(Berawa권)</td><td>Montessori</td><td class="num">확인불가(공식 PDF 추출 불완전)</td></tr>
+      <tr><td><strong>Green School Bali</strong><br>(Sibang Kaja, 통학권)</td><td>친환경·내륙</td><td class="num">확인불가(수업료 표 이미지형)</td></tr>
+    </tbody>
+    <caption>수업료 외 등록비·capital levy·교재·버스·급식·보증금이 첫해 비용을 크게 올림. CCS 공식: 신청 Rp2.5m, 등록 첫째 Rp17m, capital levy 연 Rp21.5m~, 둘째 수업료 3% 할인·연납 5% 할인. 출처: 각 학교 공식 학비표(2026/27).</caption>
+  </table></div>
+  <p>두 아이 가정은 <strong>국제학교 두 명분 학비가 전체 예산을 지배</strong>합니다. 전자책에는 "학비 표" 그대로보다 <em>등록비+levy+교재+보증금을 합친 첫해 실부담 계산표</em>를 넣는 게 실전적입니다.</p>
+
+  <h3 class="block">B6. 가정부 · 내니 · 인건비 · 생활비 <span class="badge b-ok">최저임금 높음</span> <span class="badge b-warn">시장임금 중간</span></h3>
+  <div class="cols2">
+    <div class="card">
+      <h4 style="margin-top:0">인건비 시세 (월, 관찰치)</h4>
+      <div class="tw"><table style="min-width:unset">
+        <tbody>
+          <tr><td>가정부 풀타임</td><td class="num">Rp3.5m~5m</td></tr>
+          <tr><td>가정부 파트타임</td><td class="num">Rp1.5m~1.8m</td></tr>
+          <tr><td>내니(입주형)</td><td class="num">Rp3m~5m +식사·숙소</td></tr>
+          <tr><td>영어 가능 내니</td><td class="num">Rp5m~9m</td></tr>
+          <tr><td>전일제 기사</td><td class="num">Rp5m~8m</td></tr>
+          <tr><td>요리사</td><td class="num">Rp4.5m~7m</td></tr>
+        </tbody>
+      </table></div>
+      <p style="font-size:13px;color:var(--muted);margin:0">공식 최저임금(2025): Badung Rp3,534,338/월. THR(명절보너스)·BPJS·휴일·계약조건은 현지 노무 확인.</p>
+    </div>
+    <div class="card">
+      <h4 style="margin-top:0">생활비 스냅샷 (2026)</h4>
+      <ul class="clean">
+        <li>저가식당 1끼 Rp50,000</li>
+        <li>85㎡ 기본 공과금 Rp1.46m/월, 인터넷 Rp333k/월</li>
+        <li>도심 1베드 임대 Rp18.23m/월, 3베드 Rp55.09m/월(Numbeo)</li>
+        <li>짱구 가족용 빌라 연 Rp480m부터(월 환산 Rp40m)</li>
+      </ul>
+      <div class="note" style="margin-bottom:0"><b>핵심:</b> 단일 "평균 생활비"는 오해를 부릅니다. <b>주거+학교+비자/보험+교통+직원+식비</b> 계산표로 제시해야 정확합니다.</div>
+    </div>
+  </div>
+  <div class="note">가사노동이 비공식 영역에 놓이기 쉬워, "최저가"보다 <b>공정임금 · 서면계약 · 레퍼런스 체크</b>를 강조하는 게 저자의 신뢰도와 상품 가치를 함께 높입니다.</div>
+</div></section>
+
+<!-- EBOOK TOC -->
+<section id="toc"><div class="wrap">
+  <div class="eyebrow">전자책 설계</div>
+  <h2 class="sect">전자책 목차(안): 10파트</h2>
+  <p class="sect-sub">위 6영역을 축으로, 저자의 실제 경험(크리에이터 소득·가족·반려동물)을 차별점으로 녹인 챕터 구성입니다. 한국어판·영어판 공통 뼈대로 쓰고, 영어판은 "가족 이주"로 더 좁힙니다.</p>
+
+  <div class="chapters">
+    <div class="chapter">
+      <div class="ch-h"><span class="ch-n">PART 0</span><span class="ch-t">들어가며</span></div>
+      <div class="ch-d">저자가 두 아이와 짱구에 자리 잡기까지. 이 책의 사용법과 면책.</div>
+      <ul><li>저자 이야기: 왜 발리, 왜 짱구</li><li>이 책을 읽는 법 · 업데이트 정책</li><li>면책: 법률·이민·세무 자문 아님</li><li>발리 살이의 환상 vs 현실</li></ul>
+    </div>
+
+    <div class="chapter">
+      <div class="ch-h"><span class="ch-n">PART 1</span><span class="ch-t">결정하기 전에</span></div>
+      <div class="ch-d">"올까 말까"를 1개월 체험 → 장기 이주 로드맵으로 구조화.</div>
+      <ul><li>짱구·우붓·사누르·스미냑 지역 성향 비교</li><li>1개월 체험 → 6개월 → 1~3년 이주 로드맵</li><li>가족 4인 예산 시뮬레이션(실부담 계산표)</li><li>떠나기 전 체크리스트</li></ul>
+    </div>
+
+    <div class="chapter">
+      <div class="ch-h"><span class="ch-n">PART 2</span><span class="ch-t">비자 완전정복</span></div>
+      <div class="ch-d">관광부터 거주까지, 가족 구성별 최적 조합.</div>
+      <ul><li>관광 C1(구 B211A) 입국·연장</li><li>E33G 원격근무(노마드) 비자</li><li>투자자 E28A · 은퇴 E33E/F · Second Home</li><li>자녀 학생·가족동반 자격</li><li>갱신·오버스테이·출입국 실무</li></ul>
+    </div>
+
+    <div class="chapter">
+      <div class="ch-h"><span class="ch-n">PART 3</span><span class="ch-t">집 구하기</span></div>
+      <div class="ch-d">외국인이 합법적으로 살 집을 구하는 법.</div>
+      <ul><li>임대 vs 매입, 무엇이 맞나</li><li>Hak Pakai · Leasehold · PT PMA 구조</li><li>짱구 지역별 시세와 숨은 비용</li><li>계약 체크리스트 · 공증인(PPAT) 활용</li><li>nominee 함정 피하기</li></ul>
+    </div>
+
+    <div class="chapter">
+      <div class="ch-h"><span class="ch-n">PART 4</span><span class="ch-t">반려동물 데려오기</span></div>
+      <div class="ch-d">가장 오해가 많고 위험한 영역. 사실부터 바로잡기.</div>
+      <ul><li>왜 발리는 직접 반입이 막혀 있나(광견병)</li><li>인도네시아 입국 요건: 백신·항체가·검역</li><li>필요 서류와 타임라인</li><li>검역·운송 에이전트 고르기</li><li>현실적 대안과 리스크 고지</li></ul>
+    </div>
+
+    <div class="chapter">
+      <div class="ch-h"><span class="ch-n">PART 5</span><span class="ch-t">아이들 교육</span></div>
+      <div class="ch-d">학비가 예산을 지배한다. 학교 고르기와 첫해 실부담.</div>
+      <ul><li>짱구권 국제학교 비교(CCS·ProEd·Montessori·Green School)</li><li>학비 외 등록비·levy·교재·버스·보증금</li><li>입학 절차 · 대기 · 학습지원(EAL)</li><li>통학·방과후·커뮤니티</li></ul>
+    </div>
+
+    <div class="chapter">
+      <div class="ch-h"><span class="ch-n">PART 6</span><span class="ch-t">사업과 소득</span></div>
+      <div class="ch-d">발리에서 합법적으로 돈을 버는 구조.</div>
+      <ul><li>PT PMA 설립: 납입자본 vs 투자계획</li><li>KBLI·라이선스 매칭(콘텐츠·임대·컨설팅)</li><li>크리에이터·원격 소득과 세금 기본</li><li>"현지 영업 금지선" 넘지 않기</li></ul>
+    </div>
+
+    <div class="chapter">
+      <div class="ch-h"><span class="ch-n">PART 7</span><span class="ch-t">가정부 · 직원 고용</span></div>
+      <div class="ch-d">잘 쓰면 삶의 질, 잘못 쓰면 분쟁.</div>
+      <ul><li>역할별 임금 시세(가정부·내니·기사·요리사)</li><li>서면계약 · THR · BPJS · 휴가</li><li>구인 경로 · 레퍼런스 · 영어/육아자격</li><li>공정임금과 신뢰 관계 만들기</li></ul>
+    </div>
+
+    <div class="chapter">
+      <div class="ch-h"><span class="ch-n">PART 8</span><span class="ch-t">생활비 전체 설계</span></div>
+      <div class="ch-d">평균값이 아니라 우리 가족의 계산표.</div>
+      <ul><li>주거+학교+비자/보험+교통+직원+식비 통합표</li><li>월·연 예산 템플릿(다운로드)</li><li>송금·환전·현지 계좌</li><li>절약 포인트와 함정</li></ul>
+    </div>
+
+    <div class="chapter">
+      <div class="ch-h"><span class="ch-n">PART 9</span><span class="ch-t">정착 실무 &amp; 부록</span></div>
+      <div class="ch-d">도착 후 30일, 그리고 계속 쓰는 레퍼런스.</div>
+      <ul><li>의료·보험, 교통·운전(SIM), 통신·인터넷</li><li>안전·우기·커뮤니티·종교문화 예절</li><li>공식 링크 모음 · 용어집 · 체크리스트</li><li>분기 업데이트 로그(규정 노후화 방지)</li></ul>
+    </div>
+  </div>
+
+  <div class="card fill" style="margin-top:28px">
+    <h4 style="margin-top:0">상품화 제안 (조사에서 도출한 해석)</h4>
+    <ul class="clean">
+      <li><strong>한국어판 핵심 타깃:</strong> 30~40대 부모, 자녀 1~2명, "한달살기 → 1~3년 이주"를 저울질하는 가구.</li>
+      <li><strong>영어판 핵심 타깃:</strong> 노마드 일반이 아니라 <em>family relocation to Canggu with kids + pets + staff</em>. 호주 최우선.</li>
+      <li><strong>가격 테스트(제안):</strong> 한국어 MVP 19,900~29,900원, 영어 US$19~29 A/B. 무료 체크리스트 → 이메일 → 본편 → 업데이트 멤버십 구조.</li>
+      <li><strong>날짜를 붙여라:</strong> 비자·검역·학비·임금·임대료 표마다 "최종 확인일 + 공식 URL". 분기/반기 갱신으로 신뢰 유지.</li>
+    </ul>
+  </div>
+</div></section>
+
+<!-- CAVEATS -->
+<section id="caveats"><div class="wrap">
+  <div class="eyebrow">검증 규율</div>
+  <h2 class="sect">주의 · 확인불가 항목</h2>
+  <p class="sect-sub">이 리포트는 codex(1차 공식소스)와 Claude(교차검증) 2레인으로 작성했고, 검증하지 못한 수치는 지어내지 않고 "확인불가"로 남겼습니다.</p>
+
+  <div class="card">
+    <h4 style="margin-top:0">숫자를 만들지 않은 "확인불가" 목록</h4>
+    <ul class="clean">
+      <li>발리 디지털노마드·장기체류 외국인의 공식 총인구</li>
+      <li>E33G 원격근무비자의 2024·2025 실제 발급 건수</li>
+      <li>네이버/구글 "발리 한달살기" 절대 검색량 및 검증 가능한 한국 커뮤니티 회원수</li>
+      <li>감사·플랫폼 원장으로 검증된 발리 relocation 전자책 매출 사례</li>
+      <li>모든 계정에 일반화 가능한 5만~6만 팔로워 → 전자책 구매 표준 전환율</li>
+      <li>"자카르타/수라바야 검역 후 발리 육로 반입"을 합법 표준으로 승인한 최신 정부 문서</li>
+      <li>현행 Second Home Visa의 전 신청자 공통 단일 코드·요건·비용</li>
+      <li>Montessori School Bali · Green School Bali의 재검증된 2026/27 전 학년 수업료</li>
+    </ul>
+  </div>
+
+  <div class="disclaimer">
+    이 리포트는 <strong>시장조사</strong>이며 법률·세무·이민 자문이 아닙니다. 비자·검역·부동산·세금·학비·임금 규정은 변경이 잦으므로, 전자책 출간 직전과 분기 단위로 아래 공식기관에서 반드시 재확인하시기 바랍니다. 수치는 조사기준일(2026-10-03) 기준이며, 통화 환산은 시점에 따라 달라집니다.
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <h3>핵심 1차 출처</h3>
+  <ul class="srclist">
+    <li><a href="https://bali.bps.go.id/en/news/2026/02/02/347/">BPS Bali · 2025 연간 외국인 입국 발표</a></li>
+    <li><a href="https://disparda.baliprov.go.id/wp-content/uploads/2026/06/Statistik-Pariwisata-2025-FINAL.pdf">발리 관광청 · 2025 통계연감(국적별 Table 8·9)</a></li>
+    <li><a href="https://www.bps.go.id/en/statistics-table/2/MTAxNyMy/jumlahkedatangan-wisatawan-mancanegara-ke-indonesia-menurut-pintu-masuk.html">인도네시아 BPS · 입국항별 외국인 관광객</a></li>
+    <li><a href="https://evisa.imigrasi.go.id/">인도네시아 이민국 eVisa · 비자 안내(C1·E33G·E28A·E33E 등)</a></li>
+    <li><a href="https://karantinaindonesia.go.id/">인도네시아 검역청 · 반려동물 입국·검역 절차</a></li>
+    <li><a href="https://simrek.ditjenpkh.pertanian.go.id/">인도네시아 농업부 · 동물 수입추천 요건</a></li>
+    <li><a href="https://peraturan.bpk.go.id/Details/161848/pp-no-18-tahun-2021">PP 18/2021 · 외국인 토지·주거권(Hak Pakai)</a></li>
+    <li><a href="https://jdih-storage.bkpm.go.id/jdih/jdih/2025Permeninvest005Eng-.pdf">BKPM Permeninvest 5/2025 · PT PMA 자본 요건(영문)</a></li>
+    <li><a href="https://jdih.baliprov.go.id/">발리 주정부 법령 · 반려동물 반입 관련(Pergub 88/2008 등)</a></li>
+    <li><a href="https://www.ccsbali.com/admissions/fees">Canggu Community School · 2026/27 공식 학비</a></li>
+    <li><a href="https://www.baliprov.go.id/">발리 주정부 · 2025 최저임금(UMK) 고시</a></li>
+  </ul>
+  <p style="margin-top:22px;color:var(--faint)">
+    발리 살이 전자책 시장조사 리포트 · 조사기준일 2026.10.03<br>
+    리서치 2레인 교차검증(codex × Claude) · 미검증 수치는 "확인불가" 표기 · NoFail Design
+  </p>
+</div></footer>
+
+</body>
+</html>
